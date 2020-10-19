@@ -56,5 +56,5 @@ module.exports = {
   deleteFriend,
   updateFriend,
   getFriend,
-  listFriend: listFriend,
+  listFriend,
 };
