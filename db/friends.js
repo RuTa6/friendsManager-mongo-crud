@@ -45,9 +45,11 @@ const getFriend = async (id) => {
   return result;
 };
 
-const listFriend = async () => {
+const listFriend = async (userId) => {
   // get the list of friends  DB
-  const results = await friendsModel.find();
+  const results = await friendsModel.find({
+    userId
+  });
   return results;
 };
 

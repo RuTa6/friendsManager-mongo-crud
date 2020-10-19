@@ -24,6 +24,10 @@ const autherizationMiddleware = (req, res, next) => {
 
     // match token from DB and token from Client(postman/browswr)
 
+    req.customData = {
+      userEmail: '',
+      userId: ''
+    }
     next();
 
     // if doesnot match, return error - invalid token
@@ -102,7 +106,8 @@ app.post("/add-friend", async (request, response) => {
 });
 
 app.get("/list-friend", async (request, response) => {
-  const fetcheddData = await listFriend();
+  const userId = req.customData.userId;
+  const fetcheddData = await listFriend(userId);
   response.json({
     message: "Data fetched",
     status: "ok",
