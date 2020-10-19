@@ -1,6 +1,6 @@
 require("../mongoDb");
-const { request } = require("express");
-const { update } = require("../model/friends");
+// const { request } = require("express");
+// const { update } = require("../model/friends");
 const friendsModel = require("../model/friends");
 // import friends model
 
@@ -25,14 +25,15 @@ const deleteFriend = async (id) => {
 };
 const updateFriend = async (id) => {
   // update a friend to DB
-  const updates = new friendsModel({
+  const result = await friendsModel.findOneAndUpdate({
+    _id: id
+  }, {
     userId: "456",
     fullName: "xyz",
     address: "ghi",
     contactNumber: "0777123123",
-  });
-  const result = await friendsModel.findOneAndUpdate({
-    
+  }, {
+    new: true
   });
   return result;
 };
@@ -51,7 +52,7 @@ const listFriend = async () => {
 };
 
 module.exports = {
-  addFriend: addFriend,
+  addFriend,
   deleteFriend,
   updateFriend,
   getFriend,

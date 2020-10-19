@@ -2,9 +2,6 @@ const mongoose = require("../mongoDb");
 
 // create Friends model
 const friendsModel = new mongoose.Schema({
-  // _id:{
-  //     type:String
-  // },
   userId: {
     type: String,
   },
@@ -16,13 +13,7 @@ const friendsModel = new mongoose.Schema({
   },
   contactNumber: {
     type: String,
-  },
-  //   email: {
-  //     type: String,
-  //   },
-  //   password: {
-  //     type: String,
-  //   },
+  }
 });
 
 // export model
