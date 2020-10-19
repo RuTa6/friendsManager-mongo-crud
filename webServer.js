@@ -7,9 +7,88 @@ const {
   getFriend,
   listFriend,
 } = require("./db/friends");
+const { signupUser, loginUser } = require('./db/users')
 
 const app = express();
 app.use(bodyParser.json());
+
+const autherizationMiddleware = (req, res, next) => {
+  console.log("Autherization middleware");
+
+  if (req.headers.authorization) {
+
+    // get token
+    // verify token and get payload (email)
+
+    // get user from DB (by email)
+
+    // match token from DB and token from Client(postman/browswr)
+
+    next();
+
+    // if doesnot match, return error - invalid token
+
+  } else {
+    res.status(401).json({
+      message: "No auth token found"
+    })
+  }
+
+  // console.log(req.headers.authorization)
+
+
+  // if (new Date().getHours() >= 14 && new Date().getHours() <= 18) {
+  //   next();
+  // } else {
+  //   res.json({
+  //     message: "Request not allowed right now. Try after 2PM"
+  //   })
+  // }
+}
+
+app.use(autherizationMiddleware)
+
+app.post("/signup", async (req, res) => {
+  const body = req.body;
+  const { email, password, name } = body
+
+  try {
+
+    const createdUser = await signupUser({
+      email,
+      password,
+      name
+    })
+
+    res.json({
+      message: "New user created",
+      data: createdUser
+    })
+  } catch (e) {
+    res.status(500).json({
+      message: e.message,
+    })
+  }
+})
+
+app.post("/login", async (req, res) => {
+  const body = req.body;
+  const { email, password } = body
+
+  const logedinUser = await loginUser({
+    email, password
+  })
+
+  if (logedinUser.error) {
+    res.status(401).json(logedinUser)
+  } else {
+    res.json({
+      message: "User logged in",
+      data: logedinUser
+    })
+  }
+
+})
 
 app.post("/add-friend", async (request, response) => {
   const body = request.body;
