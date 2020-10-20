@@ -1,14 +1,13 @@
 const router = require("express").Router();
 var jwt = require("jsonwebtoken");
 const autherizationMiddleware = (req, res, next) => {
-    
-    // get token
-    const str = req.headers.authorization;
-    if(str==null){
-        res.status(401).json({
-        message: "No auth token found",
-          });
-    }else{
+  // get token
+  const str = req.headers.authorization;
+  if (str == null) {
+    res.status(401).json({
+      message: "No auth token found",
+    });
+  } else {
     const string = str.split(" ");
     const token = string[1];
     // match token from DB and token from Client(postman/browswr)
@@ -23,7 +22,7 @@ const autherizationMiddleware = (req, res, next) => {
         });
       }
     });
-}
-  };
+  }
+};
 
-  module.exports ={autherizationMiddleware}
+module.exports = { autherizationMiddleware };
