@@ -1,16 +1,14 @@
 require("../mongoDb");
-const { request } = require("express");
-const { update } = require("../model/friends");
 const friendsModel = require("../model/friends");
 // import friends model
 
 const addFriend = async (body) => {
   // add a friend to DB
   const friendsmodel = new friendsModel({
-    userId: "123",
-    fullName: "def-test", //req.body.fullName,
-    address: "kandy", //req.body.address,
-    contactNumber: "1231231", //req.body.contactnumber,
+    userId: body.userId,
+    fullName:body.fullName,
+    address: body.address, 
+    contactNumber: body.contactNumber
   });
   console.log("Adding new friend");
 
@@ -23,24 +21,26 @@ const deleteFriend = async (id) => {
   const result = await friendsModel.findByIdAndRemove(id);
   return result;
 };
-const updateFriend = async (id) => {
+const updateFriend = async (id,body) => {
   // update a friend to DB
-  const updates = new friendsModel({
-    userId: "456",
-    fullName: "xyz",
-    address: "ghi",
-    contactNumber: "0777123123",
-  });
   const result = await friendsModel.findOneAndUpdate({
-    
-  });
+		_id: id
+	},
+	{
+    userId: body.userId,
+    fullName: body.fullName,
+    address: body.address,
+    contactNumber: body.contactNumber
+  },{
+		new:true
+	}
+	
+	);
   return result;
 };
 const getFriend = async (id) => {
-  // console.log("id>>> " + id);
   // select a friend from DB
   const result = await friendsModel.findById(id);
-  // console.log("result", result);
   return result;
 };
 
