@@ -16,29 +16,29 @@ const signUp = async (body) => {
 };
 
 const signIn = async (body) => {
-try{
-  const loggedUser = await usersModel.findOne({
-    email: body.email,
-  });
-  const result = await bcrypt.compare(body.password, loggedUser.password);
-  if (result){
-      return{
-          id:loggedUser._id,
-          email:loggedUser.email,
-          userName:loggedUser.userName,
-          token:loggedUser.token
-      }
-  }else{
-      return{
-          error:true,
-          message:"passwords didn't match"
-      }
-  }
-} catch(e){
-    return{
-        message:"Email is not available"
+  try {
+    const loggedUser = await usersModel.findOne({
+      email: body.email,
+    });
+    const result = await bcrypt.compare(body.password, loggedUser.password);
+    if (result) {
+      return {
+        id: loggedUser._id,
+        email: loggedUser.email,
+        userName: loggedUser.userName,
+        token: loggedUser.token,
+      };
+    } else {
+      return {
+        error: true,
+        message: "passwords didn't match",
+      };
     }
-}
+  } catch (e) {
+    return {
+      message: "Email is not available",
+    };
+  }
 };
 
 module.exports = {

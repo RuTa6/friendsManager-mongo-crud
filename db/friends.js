@@ -6,9 +6,9 @@ const addFriend = async (body) => {
   // add a friend to DB
   const friendsmodel = new friendsModel({
     userId: body.userId,
-    fullName:body.fullName,
-    address: body.address, 
-    contactNumber: body.contactNumber
+    fullName: body.fullName,
+    address: body.address,
+    contactNumber: body.contactNumber,
   });
   console.log("Adding new friend");
 
@@ -21,21 +21,22 @@ const deleteFriend = async (id) => {
   const result = await friendsModel.findByIdAndRemove(id);
   return result;
 };
-const updateFriend = async (id,body) => {
+const updateFriend = async (id, body) => {
   // update a friend to DB
-  const result = await friendsModel.findOneAndUpdate({
-		_id: id
-	},
-	{
-    userId: body.userId,
-    fullName: body.fullName,
-    address: body.address,
-    contactNumber: body.contactNumber
-  },{
-		new:true
-	}
-	
-	);
+  const result = await friendsModel.findOneAndUpdate(
+    {
+      _id: id,
+    },
+    {
+      userId: body.userId,
+      fullName: body.fullName,
+      address: body.address,
+      contactNumber: body.contactNumber,
+    },
+    {
+      new: true,
+    }
+  );
   return result;
 };
 const getFriend = async (id) => {
@@ -44,16 +45,18 @@ const getFriend = async (id) => {
   return result;
 };
 
-const listFriend = async () => {
+const listFriend = async (userId) => {
   // get the list of friends  DB
-  const results = await friendsModel.find();
+  const results = await friendsModel.find({
+    userId,
+  });
   return results;
 };
 
 module.exports = {
-  addFriend: addFriend,
+  addFriend,
   deleteFriend,
   updateFriend,
   getFriend,
-  listFriend: listFriend,
+  listFriend,
 };

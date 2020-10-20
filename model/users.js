@@ -6,15 +6,14 @@ const usersModel = new mongoose.Schema({
     type: String,
   },
   email: {
-    type: String  
+    type: String,
   },
   password: {
     type: String,
   },
-  token:{
-      type:String
-  }
-
+  token: {
+    type: String,
+  },
 });
 
 // export model
